@@ -1,0 +1,3 @@
+sudo chown -R admin *
+sudo cp -R app/tmpTemplate app/tmp
+sudo chown -R apache app/tmp

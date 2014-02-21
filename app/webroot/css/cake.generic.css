@@ -16,6 +16,39 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+
+/*  
+
+My changes at the top.  Scott  2/18/14
+
+
+*/
+
+
+
+.schoolName {	
+      padding-top: 20px;  
+      font-size:1.5em;
+}
+
+.schoolPhone {
+        padding-left: 20px; 
+}
+
+.textF1 {
+	color: #d00;
+        width: 100px;
+        padding: 20px 10px; 
+        line-height: 28px;
+}
+
+.textF2 {
+	color: #d00;
+        width: 200px;
+        padding: 20px 10px; 
+        line-height: 28px;
+}
+
 * {
 	margin:0;
 	padding:0;
@@ -23,7 +56,7 @@
 
 /** General Style Info **/
 body {
-	background: #003d4c;
+	background: #004410;
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:90%;
