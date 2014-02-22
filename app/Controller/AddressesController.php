@@ -14,114 +14,23 @@ class AddressesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-   
-       
         
         
-    protected function _setprefixArray(){     
-         $searchHelper = array();
+        
+        public function streetChooser(){
+            $this->layout = 'simple'; 
+        }
+        
+        public function numChooser($streetNum){
+             $this->layout = 'simple';
+            echo "<h2>Street Num is $streetNum</h2>";
             
-            $prefixes = array('n','north','s','south','e','east','w','west','pl','place','cir','circle');
-            $suffixes = array('ln','lane','dr','drive','st','street','ave','avenue','blvd','ct','court');  
-            $specialStreets = array('outer drive','outer dr','ann arbor','west village','lake village','royal vale',
-                           'town center','west village','executive plaza','fairlane woods', 'herbert weier','weier');
+        }
+        
 
-            $searchHelper['prefixes'] = $prefixes;
-            $searchHelper['suffixes'] = $prefixes;
-            $searchHelper['specialStreets'] = $specialStreets;
-            return $searchHelper;
-        }
-        
-    /*    
-   // protected function _getAddressesInRange($minval,$maxval,$streetNums,$enteredNum){
-      protected function _getAddressesInRange2(){   
-        $streetNums = array('100','110','120','130','140','150','160','170','180','190',
-                '200','210','220','230','240','250','260','270','280','290',
-                '300','310','320','330','340','350','360','370','380','390',
-                '400','410','420','430','440','450','460','470','480','490',
-                '500','510','520','530','540','550','560','570','580','590'
-                );
-            
-        $minval = 5;
-        $maxval = 5;
-            
-            $enteredNum = 353;
-      // gets the closese address on the street - assumes the street is found.  (or function should not have been called)
-            $closest = null;
-            foreach($streetNums as $streetNum) {
-               if($closest == null || abs($enteredNum - $closest) > abs($streetNum - $enteredNum)) {
-                  $closest = $streetNum;
-               }
-            }
-           echo "<h2>The entered number is $enteredNum The closest number is $closest</h2>";
-            $indexClosest = array_search($closest,$streetNums);
-        echo "<h2>Its index is $indexClosest</h2>";
-           $start = abs($indexClosest - $minval);
-           $finish = abs($indexClosest + $maxval);
-           echo "<h2>starting index is $start</h2>";
-           echo "<h2> ending is $finish</h2>";
-           
-           for ($i = $start; $i <= $finish; $i++) {
-               if(isset($streetNums[$i])){
-                    echo $streetNums[$i].", ";
-               }
-            }
-
-        }
-        
-     */   
-        
-    protected function _getAddressesInRange($minval,$maxval,$streetNums,$enteredNum){
-
-            // gets the closest address on the street - assumes the street is found.  
-            // (or function should not have been called)
-            $addressList = array();
-            $closest = null;
-            foreach($streetNums as $streetNum) {
-               if($closest == null || abs($enteredNum - $closest) > abs($streetNum - $enteredNum)) {
-                  $closest = $streetNum;
-               }
-            }
-            $indexClosest = array_search($closest,$streetNums);
-           $start = abs($indexClosest - $minval);
-           $finish = abs($indexClosest + $maxval);
-       
-           
-           for ($i = $start; $i <= $finish; $i++) {
-               if(isset($streetNums[$i])){
-                   // echo $streetNums[$i].", ";
-                    $addressList[] = $streetNums[$i];
-               }
-            }
-                return $addressList;
-        }
-        
-        
-        
-    protected function _isSpecial($streetName,$specialStreets){
-   
-        echo   $streetName;  
-      //  pr($specialStreets);
-            
-      
-        foreach($specialStreets as $item){
-         //   if(preg_match("/ann arbor\s*\w*/",$item,$match)!== false){
-                  if(preg_match_all("/^\b$streetName\b\s*\w*/i",$item,$match) != 0){
-              echo "<h2>$streetName matched $item!</h2>";
-              pr($match);
-              break;
-            } else {
-                  echo  "<h4>So Sad ....$streetName was not found!</h4>";
-            }
-        
-        }
-        
-        return TRUE;
-        }
-        
-        
-        
-        
+  //==============================================================================// 
+  //==========================     OLD CODE   ====================================//  
+  //==============================================================================//
         protected function _getStreet($streetName){
             $streetArray = $this->_setprefixArray();
             
@@ -131,28 +40,12 @@ class AddressesController extends AppController {
                         'conditions' => array('street LIKE' => "%$streetName%"),
                         'fields' => array('address','street'),
                     ));
-            
-         //   pr($take1);
-      
         }
+               
         
-        
-        
-        
-        
-        
-        
-//=================================================================================//        
+      
  /**
   * find schools method
-  * 
-  *  grab the address value from the form.  check to see if it starts with a number.  
-  *  If so, do a search for the exact address.
-  *  If found, report the schools
-  *  Else, list all the addresses between minValue  and maxValue for the street field
-  *     If nothing found  reurn error string. 
-  * 
-  * 
   *
   * @return void
   */
@@ -192,12 +85,7 @@ class AddressesController extends AppController {
 
             if(!$yourSchools){
                 $searchHelper = $this->_setprefixArray();
-                $streetArray = $this->_isSpecial($streetName,$searchHelper['specialStreets']);
-                
-                
-                
-                
-                
+                $streetArray = $this->_isSpecial($streetName,$searchHelper['specialStreets']); 
 
                 // gets the closest address on the street - assumes the street is found.  
                 // (or function should not have been called)
