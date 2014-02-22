@@ -28,7 +28,7 @@ class AddressesController extends AppController {
 
             $searchHelper['prefixes'] = $prefixes;
             $searchHelper['suffixes'] = $prefixes;
-            $searchHelper['specialStreets'] = $prefixes;
+            $searchHelper['specialStreets'] = $specialStreets;
             return $searchHelper;
         }
         
@@ -98,12 +98,32 @@ class AddressesController extends AppController {
         
         
         
+    protected function _isSpecial($streetName,$specialStreets){
+   
+        echo   $streetName;  
+      //  pr($specialStreets);
+            
+      
+        foreach($specialStreets as $item){
+         //   if(preg_match("/ann arbor\s*\w*/",$item,$match)!== false){
+                  if(preg_match_all("/^\b$streetName\b\s*\w*/i",$item,$match) != 0){
+              echo "<h2>$streetName matched $item!</h2>";
+              pr($match);
+              break;
+            } else {
+                  echo  "<h4>So Sad ....$streetName was not found!</h4>";
+            }
+        
+        }
+        
+        return TRUE;
+        }
+        
+        
+        
+        
         protected function _getStreet($streetName){
             $streetArray = $this->_setprefixArray();
-            
-          
-            
-            
             
             $take1 = $this->Address->find('all',
                     array(
@@ -112,7 +132,7 @@ class AddressesController extends AppController {
                         'fields' => array('address','street'),
                     ));
             
-            pr($take1);
+         //   pr($take1);
       
         }
         
@@ -171,13 +191,17 @@ class AddressesController extends AppController {
             
 
             if(!$yourSchools){
-               // $streetList = $this->_getStreet($streetName);
+                $searchHelper = $this->_setprefixArray();
+                $streetArray = $this->_isSpecial($streetName,$searchHelper['specialStreets']);
                 
                 
                 
+                
+                
+
                 // gets the closest address on the street - assumes the street is found.  
                 // (or function should not have been called)
-               $addressList =  $this->_getAddressesInRange($minValue,$maxValue,$streetNums,$streetNumber);
+                // $addressList =  $this->_getAddressesInRange($minValue,$maxValue,$streetNums,$streetNumber);
                 $this->set('notFoundStr',$notFoundStr);
               
                 // b. See if     
