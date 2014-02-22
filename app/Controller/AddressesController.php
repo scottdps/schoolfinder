@@ -19,6 +19,10 @@ class AddressesController extends AppController {
         
         public function streetChooser(){
             $this->layout = 'simple'; 
+             $Streets = $this->Address->jsonStreetList();
+                $this->set('Streets',$Streets);
+            
+            
         }
         
         public function numChooser($streetNum){
@@ -26,6 +30,15 @@ class AddressesController extends AppController {
             echo "<h2>Street Num is $streetNum</h2>";
             
         }
+        
+        
+        public function ajaxGetStreets(){
+      //  echo "hello From  ajaxGetStreets()";
+        $this->autoRender = FALSE;
+        
+        $tString = "this is a string set in addresses/ajaxGetStreets";       
+        return $tString;
+    }
         
 
   //==============================================================================// 

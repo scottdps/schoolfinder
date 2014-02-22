@@ -1,20 +1,82 @@
-<div class="addresses form">
-<?php echo $this->Form->create('Address'); ?>
+<script>
     
     
+  $(function() {
+ 
+  var Streets= <?php echo $Streets; ?>; 
+   
+ $('#agencies').autocomplete({ 
+     source: Streets,
+     change: function (event, ui) {
+          $('#streetName').html('Change Event');
+         alert(ui.item.id); 
+         $('#streetID').val(ui.item.id);
+      $.ajax({
+            url: 'ajaxGetAgents',
+            cache: false,
+            type: 'GET',
+           // dataType: 'HTML',
+            success: function (data) {
+                $('#schoolsInfo').html(data);
+                
+                
+                
+            },
+             error: function (data) {
+                $('#schoolsInfo').html('Error, it has failed');
+                alert('in error functions')
+            }
+        });
+     } 
+ 
+ });
 
+  });  
+  </script>  
+
+
+
+
+
+
+
+
+<div class="addresses form">
+<?php echo $this->Form->create('Address'); 
+    
+  pr($Streets);  
+?>
 	<fieldset>
-		<legend><?php  echo __('Find Your Schools'); ?></legend>
+		<legend><?php  echo __('Find Your Street'); ?></legend>
 	<?php
-        echo "<table border = '0'><tr>";
-            echo '<td width="10%">'.$this->Form->input('StreetNumber',array('label' => 'Street Number', 'class' =>'textF1'  )).'</td>';
-            echo '<td width="80%">'.$this->Form->input('StreetName',array('label' => 'Street Name','class' => 'textF2')).'</td>';
-	echo "</tr></table >";	
+            echo $this->Form->input('StreetName',array('label' => 'Street Name','id' => 'streetName',   'class' => 'textF2'));
+            echo $this->Form->input('StreetID',array('label' => 'Street ID',  'id' =>'streetID' ));
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+        <?php echo $this->Form->end(__('Next->')); ?>
     
     <div  id="result">    </div> 
+    
+      <div id="schoolsInfo">
+        <?php 
+           if(isset($yourSchools['Address']['Elementary'])){
+           echo '<div class="schoolName">'.$yourSchools['Esschools']['name'].'</div>';
+           echo '<div class="schoolPhone">'.$yourSchools['Esschools']['phone'].'</div>';
+
+           echo '<div class="schoolName">'.$yourSchools['Msschools']['name'].'</div>';
+           echo '<div class="schoolPhone">'.$yourSchools['Msschools']['phone'].'</div>';
+
+           echo '<div class="schoolName">'.$yourSchools['Hsschools']['name'].'</div>';
+            echo '<div class="schoolPhone">'.$yourSchools['Hsschools']['phone'].'</div>';
+
+       } else {
+           echo '<div class="schoolName"></div>';
+       }	
+       ?>
+  </div>
+    
+    
+    
 </div>
 
 
@@ -23,21 +85,7 @@
 
 	<ul>
 <li><a href="http://dearbornschools.org"> Return DPS Home page </a></li>
-<?php 
-	if(isset($yourSchools['Address']['Elementary'])){
-        echo '<div class="schoolName">'.$yourSchools['Esschools']['name'].'</div>';
-        echo '<div class="schoolPhone">'.$yourSchools['Esschools']['phone'].'</div>';
-        
-        echo '<div class="schoolName">'.$yourSchools['Msschools']['name'].'</div>';
-        echo '<div class="schoolPhone">'.$yourSchools['Msschools']['phone'].'</div>';
-        
-        echo '<div class="schoolName">'.$yourSchools['Hsschools']['name'].'</div>';
-         echo '<div class="schoolPhone">'.$yourSchools['Hsschools']['phone'].'</div>';
-        
-    } else {
-        echo '<div class="schoolName"></div>';
-    }	
-?>
+
 
 	</ul>
 </div>
