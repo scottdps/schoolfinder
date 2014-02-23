@@ -5,14 +5,14 @@
  
   var Streets= <?php echo $Streets; ?>; 
    
- $('#agencies').autocomplete({ 
+ $('#streetName').autocomplete({ 
      source: Streets,
      change: function (event, ui) {
           $('#streetName').html('Change Event');
          alert(ui.item.id); 
          $('#streetID').val(ui.item.id);
       $.ajax({
-            url: 'ajaxGetAgents',
+            url: 'ajaxGetStreets',
             cache: false,
             type: 'GET',
            // dataType: 'HTML',
@@ -44,7 +44,7 @@
 <div class="addresses form">
 <?php echo $this->Form->create('Address'); 
     
-  pr($Streets);  
+ 
 ?>
 	<fieldset>
 		<legend><?php  echo __('Find Your Street'); ?></legend>

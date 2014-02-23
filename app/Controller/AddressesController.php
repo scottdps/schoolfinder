@@ -14,13 +14,16 @@ class AddressesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
-        
+        public $uses = array('Street');
         
         
         public function streetChooser(){
             $this->layout = 'simple'; 
-             $Streets = $this->Address->jsonStreetList();
-                $this->set('Streets',$Streets);
+             $Streets = $this->Street->jsonStreetList();
+             echo "begin streets";
+             pr($Streets);
+             echo "begin streets";
+             $this->set('Streets',$Streets);
             
             
         }
