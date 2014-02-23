@@ -8,6 +8,7 @@
     <?php echo $this->Html->css('jquery-ui-1.10.3.custom.css'); ?>
     <?php echo $this->Html->script('jquery-1.10.1.js');  ?>
     <?php echo $this->Html->script('jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js');  ?>
+ 
     
 	<?php echo $this->Html->charset(); ?>
 	<title>
