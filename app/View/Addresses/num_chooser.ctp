@@ -56,7 +56,7 @@
 <?php echo $this->Form->create('Address', array('action' => 'numChooser'));
 ?>
 	<fieldset>
-		<legend><?php  echo __('Find Your Street, then click "Next"'); ?></legend>
+		<legend><?php  echo __('find your Address'); ?></legend>
 	<?php
         echo "<table border='0'><tr>";
         echo "<td>";

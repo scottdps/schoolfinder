@@ -28,13 +28,17 @@ class AddressesController extends AppController {
         
         public function numChooser(){
             $this->layout = 'simple';
-            echo "<h2>Street Num is $streetNum</h2>";     
-            $Streets2 = $this->Street->jsonStreetList();
-            $this->set('Streets2',$Streets2);    
+            
+            if ($this->request->is('post')) {
+                $joe = 'Frank';
+                //echo "<h2>Street Num is ...</h2>";     
+                $Streets2 = $this->Street->jsonStreetList();
+                $this->set('Streets2',$Streets2);    
+            }
         }
         
              public function ajaxGetNumber(){
-      //  echo "hello From  ajaxGetStreets()";
+      //  echo "goodbye From  ajaxGetStreets()";
         $this->autoRender = FALSE;
         
         $tString = "Congradulations";       
@@ -102,7 +106,7 @@ public function addressAjax()
  */
 	public function index() {
 		$this->Address->recursive = 0;
-		$this->set('addresses', $this->Paginator->paginate());
+		//$this->set('addresses', $this->Paginator->paginate());
 	}
 
 /**
