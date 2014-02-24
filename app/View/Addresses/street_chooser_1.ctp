@@ -23,25 +23,7 @@
                 $('#addressInstruction').html(data);
         //=======  new code  between here  =============//        
             $('#numfields').show();    
-             $('#number').autocomplete({ 
-                    source: '<?php echo $this->Html->url(array('action' => 'numChooser')); ?>',
-                    change: function (event, ui) {
-                       $('#streetID').val(ui.item.id);
-        $.ajax({
-            url: 'ajaxGetNumber',
-            cache: false,
-            type: 'GET',
-            success: function (data) {
-                $('#addressInstruction').html(data);
-
-            },
-             error: function (data) {
-                $('#showMe').html('Error, it has failed');
-                alert('in error functions')
-            }
-        });
-     } 
- });//
+            
             
             
             
@@ -58,6 +40,7 @@
             }
         });
      } 
+ 
  });
 
   });  
@@ -93,7 +76,7 @@
 	</fieldset>
         <?php echo $this->Form->end(__('Next->')); ?>
     
-   
+    <div  id="result">/div> 
     
       <div id="schoolsInfo">
         <?php 

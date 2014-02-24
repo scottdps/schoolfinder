@@ -13,113 +13,52 @@ class AddressesController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	//public $components = array('Paginator');
+        public $components = array('RequestHandler');
         public $uses = array('Street');
         
         
         public function streetChooser(){
             $this->layout = 'simple'; 
              $Streets = $this->Street->jsonStreetList();
-             echo "begin streets";
-             pr($Streets);
-             echo "begin streets";
              $this->set('Streets',$Streets);
             
             
         }
         
-        public function numChooser($streetNum){
-             $this->layout = 'simple';
-            echo "<h2>Street Num is $streetNum</h2>";
-            
+        public function numChooser(){
+            $this->layout = 'simple';
+            echo "<h2>Street Num is $streetNum</h2>";     
+            $Streets2 = $this->Street->jsonStreetList();
+            $this->set('Streets2',$Streets2);    
         }
+        
+             public function ajaxGetNumber(){
+      //  echo "hello From  ajaxGetStreets()";
+        $this->autoRender = FALSE;
+        
+        $tString = "Congradulations";       
+        return $tString;
+    }
+         
+        
         
         
         public function ajaxGetStreets(){
       //  echo "hello From  ajaxGetStreets()";
         $this->autoRender = FALSE;
         
-        $tString = "this is a string set in addresses/ajaxGetStreets";       
+        $tString = "Now Enter your street number";       
         return $tString;
     }
         
-
-  //==============================================================================// 
-  //==========================     OLD CODE   ====================================//  
-  //==============================================================================//
-        protected function _getStreet($streetName){
-            $streetArray = $this->_setprefixArray();
-            
-            $take1 = $this->Address->find('all',
-                    array(
-                        'recursive' => -1,
-                        'conditions' => array('street LIKE' => "%$streetName%"),
-                        'fields' => array('address','street'),
-                    ));
-        }
-               
-        
-      
- /**
-  * find schools method
-  *
-  * @return void
-  */
-    public function whatSchool2() {
-        $this->layout = 'simple';
-        $minValue = 5;
-        $maxValue = 5;
-        $Numerr = '';
-        $Nameerr = '';
-        $searchWorked = 0;
-        $notFoundStr = 'Sorry, your address was not found';
-        $this->set('Numerr','');
-             $this->set('Nameerr','');
-             $this->set('notFoundStr','');
-       
-      
-        if ($this->request->is('post')) {
-          $streetNumber = strtolower(trim($this->request->data['Address']['StreetNumber']));
-          $streetName = strtolower(trim($this->request->data['Address']['StreetName']));
-          
-          $streetName = preg_replace("/[^a-zA-Z 0-9]+/", " ", $streetName);
-          echo "<h2>streetName is $streetName</h2>";
-          $streetList = $this->_getStreet($streetName);
-          
-          
-          //a. Attempt a simple search
-            $yourSchools = $this->Address->find('first',array(
-                'conditions' =>   array("AND" => array(
-                    "Address" => $streetNumber,
-                    "Street LIKE" => "%$streetName%")
-                    //'Street' => $streetName)
-                ),
-                'contain' => array('Esschools','Msschools','Hsschools'),
-                ));
-             $this->set('yourSchools',$yourSchools);
-            
-
-            if(!$yourSchools){
-                $searchHelper = $this->_setprefixArray();
-                $streetArray = $this->_isSpecial($streetName,$searchHelper['specialStreets']); 
-
-                // gets the closest address on the street - assumes the street is found.  
-                // (or function should not have been called)
-                // $addressList =  $this->_getAddressesInRange($minValue,$maxValue,$streetNums,$streetNumber);
-                $this->set('notFoundStr',$notFoundStr);
-              
-                // b. See if     
-                $this->set('yourSchools',$yourSchools);
-              //  return $this->redirect(array('action' => 'index'));
-            } else {
-               // $this->Session->setFlash(__('The address was not found. Please, try again.'));
-            }
-        }
-    }
-        
-//=================================================================================//         
-        
-        
+public function addressAjax()
+{
+      $this->autoRender = false;
+  echo "In AddressAjax";
+     $Streets2 = $this->Street->jsonStreetList();
+    $this->set('Streets2',$Streets2);
+}
         
         
  /**

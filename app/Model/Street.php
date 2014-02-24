@@ -23,17 +23,7 @@ class Street extends AppModel {
      * @author Scott Tobias
      * @return json String $JSONStreets
      */
-       public function XjsonStreetList(){
-        $Streets = $this->find('list',array(
-                    'recursive' => -1,
-                    'fields' => array('id','Street'),
-                    'order' => array('Street' => 'asc')
-                ));  
-       
-           return  $JSONStreets = json_encode($Streets);
-       }      
-        
-        
+ 
        
         public function jsonStreetList(){
         $Streets = $this->find('list',array(
@@ -53,28 +43,7 @@ class Street extends AppModel {
            return  $JSONStreets = json_encode($streetList);
        }  
         
-      public function jsonTravelAgencyList(){
-        $TAgencies = $this->find('list',array(
-                    'recursive' => -1,
-                    'fields' => array('name'),
-                    'conditions' => array('crew_type_id' => array(4,3)),
-                    'order' => array('name' => 'asc')
-                ));  
-        
-            $sa = array();
-            $TravelAgencies = array();
-            foreach ($TAgencies as $key => $value) {
-               $sa['label'] = $value; 
-                $sa['value'] = $value;
-                $sa['id'] = $key;
-                array_push($TravelAgencies, $sa);   
-            }
-           return  $JSONAgencies = json_encode($TravelAgencies);
-       }  
-        
-        
-        
-        
+  
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
